@@ -1,0 +1,91 @@
+I"r<hr />
+
+<p>Nlp 수업 세 번째 과제는 <strong>heteronym 찾기</strong>다. <br />
+중간고사가 취소돼서 과제 수가 많아지고 비중도 훨씬 커졌다. <br />
+Heteronym 찾기뿐만 아니라 몇 가지 기준에 따라 <strong>ranking</strong>도 해야하는 과제다.</p>
+
+<h2 id="heteronym이란">Heteronym이란?</h2>
+
+<p>Merriam-Webster Dictionary에 의하면 heteronym은 “one of two or more homographs (such as a bass voice and bass, a fish) that differ in pronounciation and meaning”이다.</p>
+<blockquote>
+  <p>철자는 같지만 발음과 의미가 다른 단어가 heteronym이다.</p>
+</blockquote>
+
+<p>Heteronym은 같은 POS를 가질 수도 있고 아닐 수도 있다. 어떤 단어가 heteronym이냐면 bass(물고기, 낮은 음), tear(눈물, 찢다), address(주소, 연설하다) 등이 있다. <br />
+Heteronym과제 목표는 heteronym이 최소 두 번 나타나는 문장과 해당하는 heteronym의 <strong>pronouncing annotation</strong>을 찾는 것이다.</p>
+
+<h2 id="ranking-기준">Ranking 기준</h2>
+
+<p>Heteronym만 찾으면 되는 게 아니라 csv로 output을 뽑을 때 찾은 문장을 ordering해서 상위 30개 문장을 찾는 것이 최종 목표다. Ranking 기준은 다음과 같다.
+<br /></p>
+<ol>
+  <li>Homograph가 많이 있을수록 순위가 높다.
+    <ul>
+      <li>wind + wind + tear + tear &gt; wind + wind + tear</li>
+    </ul>
+  </li>
+  <li>Homograph가 있는 문장이 heteronym만 있는 문장보다 순위가 높다.
+    <ul>
+      <li>wind + wind &gt; wind + tear</li>
+    </ul>
+  </li>
+  <li>POS가 같은 heteronym을 가진 문장이 순위가 더 높다.
+    <ul>
+      <li>tear + tear &gt; PROduce + proDUCE</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="question">Question</h2>
+
+<p>요약하면 heteronym이 있는 문장을 찾으면 되는건데 description을 읽으면서 생긴 질문을 몇개 적어본다.
+<br /></p>
+<ul>
+  <li>Heteronym이 있으면 무조건 뽑는다?</li>
+</ul>
+
+<blockquote>
+  <p>나는 ‘close’가 이미 heteronym이라는 걸 알고 있는데 ‘가까운’을 의미하는 ‘close’가 두 번 나오는 문장도 뽑는걸까 아니면 ‘가까운’과 ‘닫다’를 의미하는 ‘close’가 함께 나온 문장을 뽑아야하는걸까.</p>
+</blockquote>
+
+<ul>
+  <li>특정 단어가 heteronym인지 아닌지 automatically하게 찾아야하는건가?</li>
+</ul>
+
+<blockquote>
+  <p>1번 질문에서 만약 같은 의미를 가지는 heteronym이 두 번 이상 나오는 문장도 뽑는거라면 그 단어가 heteronym인지 어떻게 알 수 있는걸까. 직접 heteronym list를 만들 수는 있겠지만 과제 의도에 맞지 않는 방법같다.</p>
+</blockquote>
+
+<ul>
+  <li>Heteronyms but not homographs가 정확히 어떤 경우일까?</li>
+</ul>
+
+<blockquote>
+  <p>Ranking 두 번째 기준을 보면 multiple occurrences of homograph가 heteronyms but not homographs인 경우보다 높은 순위라고 말한다. 그런데 homograph는 <em>same spelling with different meaning</em>이고 heteronym은 <em>same spelling with different pronounciation and meaning</em>이다. Heteronym이 homograph에 포함되는 개념같은데 heteronyms but not homographs인 경우가 있을까?</p>
+</blockquote>
+
+<h2 id="answer">Answer</h2>
+
+<p>Office hour에서 조교님들한테 물어봤다.
+첫 번째로, heteronym를 automatic한 방법으로 찾으려면 의미와 발음이 다른 두 단어가 한 문장안에 있어야하기 때문에 pair로 존재할 때만 찾으면 된다.
+따라서 automatically하게 heteronym을 찾으면 된다. 
+세 번째 질문의 대답을 통해 문제가 더 명확해졌다. <strong>Heteronym은 object 개념이고 homograph는 relation 개념이다.</strong></p>
+
+<p>위 개념을 가지고 ranking criteria를 다시 살펴보자.</p>
+<ul>
+  <li>wind + wind + tear + tear &gt; wind + wind + tear
+    <blockquote>
+      <p>왼쪽은 wind pair와 tear pair 총 두 개의 homograph가 있고 오른쪽은 wind pair, 하나의 homograph가 있어서 왼쪽 순위가 더 높다.</p>
+    </blockquote>
+  </li>
+  <li>wind + wind &gt; wind + tear
+    <blockquote>
+      <p>왼쪽은 wind pair, 하나의 homograph가 있지만 오른쪽은 wind 하나 tear 하나가 있어서 사실 homograph가 없다.</p>
+    </blockquote>
+  </li>
+</ul>
+
+<h2 id="앞으로-할-것">앞으로 할 것</h2>
+
+<p>지금도 정확히 이해한 건 아니다. Heteronym, homograph, ranking criteria의 정확한 정의는 조만간 다시 공지해주신다니 잠시 기다려야겠다. 그 전에 할 일은 무작위 corpora 중에 heteronym이 많이 나타날 것 같은(말장난 위주 text)를 찾는 것부터 구현해야겠다.</p>
+:ET

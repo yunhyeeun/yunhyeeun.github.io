@@ -1,0 +1,20 @@
+I"j<hr />
+
+<p>Nlp 수업 세 번째 과제는 <strong>heteronym 찾기</strong>다. 중간고사가 취소돼서 과제 수가 많아지고 비중도 훨씬 커졌다. Heteronym 찾기뿐만 아니라 몇 가지 기준에 따라 <strong>ranking</strong>도 해야하는 과제다.</p>
+
+<h2 id="heteronym이란">Heteronym이란?</h2>
+
+<p>Merriam-Webster Dictionary에 의하면 heteronym은 “one of two or more homographs (such as a bass voice and bass, a fish) that differ in pronounciation and meaning”. <strong>철자는 같지만 발음과 의미가 다른 단어</strong>를 heteronym이라 하나보다. Heteronym은 같은 POS를 가질 수도 있고 아닐 수도 있다. 어떤 단어가 heteronym이냐면 bass(물고기, 낮은 음), tear(눈물, 찢다), address(주소, 연설하다) 등이 있다. 과제 목표는 heteronym이 최소 두 번 나타나는 문장과 해당하는 heteronym의 <strong>pronouncing annotation</strong>을 찾는 것이다.</p>
+
+<h2 id="ranking-기준">Ranking 기준</h2>
+
+<p>Heteronym만 찾으면 되는 게 아니라 csv로 output을 뽑을 때 찾은 문장을 ordering해서 상위 30개 문장을 찾는 것이 최종 목표다. Ranking 기준은 다음과 같다.
+<br /></p>
+<ol>
+  <li>Homograph가 많이 있을수록 순위가 높다.
+    <ul>
+      <li>wind + wind + tear + tear &gt; wind + wind + tear</li>
+    </ul>
+  </li>
+</ol>
+:ET
