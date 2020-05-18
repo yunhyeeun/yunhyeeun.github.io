@@ -1,0 +1,33 @@
+I"2<hr />
+<p>프로그래머스 코딩테스트를 해보았다. Level 1이라고 만만하게 봐서는 안된다.</p>
+
+<h2 id="소수-찾기">소수 찾기</h2>
+<blockquote>
+  <p>1부터 입력받은 숫자 n 사이에 존재하는 소수의 개수를 반환하는 함수, solution을 만들어보세요. <br />
+소수는 1과 자기 자신으로만 나누어지는 수를 의미합니다. <br />
+(1은 소수가 아닙니다.) <br />
+예시) 1부터 10 사이의 소수는 [2, 3, 5, 7] 4개가 존재하므로 4를 반환</p>
+</blockquote>
+
+<p>해결방법은 간단하다. 입력받은 n만큼 for loop을 돌면서 소수인지 체크하는 함수를 만들고 이 함수를 다시 n만큼 for loop을 돌면 된다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def is_prime(n):
+    if n == 1:
+        return False
+    for i in range(1, n):
+        if n%i == 0 and i != 1:
+            return False
+    return True
+
+def solution(n):
+    cnt = 0
+    for i in range(1,n+1):
+        if is_prime(i):
+            cnt += 1
+    return cnt
+</code></pre></div></div>
+<p>이 방법을 사용하면 소수를 찾을 수 있지만 이중 for문을 돌아서 시간이 오래 걸리는 것이 단점이다. <br />
+후반 테스트 케이스와 효율성 테스트에서 fail이 뜨는 것도 그 때문이다. <br />
+소수가 아님을 확인하면 for문을 다 돌기 전에 break하거나 입력받은 n의 루트값까지만 for문을 도는 정도로는 효율성 테스트를 통과할 수 없다. <br />
+새로운 아이디어가 필요하다</p>
+:ET
