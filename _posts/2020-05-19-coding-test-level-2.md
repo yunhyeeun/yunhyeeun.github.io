@@ -8,7 +8,7 @@ tags:
     - programmers
 ---
 ***
-프로그래머스 Level2를 했다. Level1과 난이도 차이는 크지 않다.   
+프로그래머스 Level2를 했다. Level1과 난이도 차이는 크지 않았다.   
 
 ## 행렬 곱 구하기
 
