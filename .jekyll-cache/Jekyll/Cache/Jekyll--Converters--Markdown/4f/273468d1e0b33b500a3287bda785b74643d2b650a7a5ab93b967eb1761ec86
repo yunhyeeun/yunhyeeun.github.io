@@ -1,0 +1,120 @@
+I"�<h2 id="서론">서론</h2>
+
+<p>pintos project3에서 supplemental page table을 구현하기 위해 hash table을 사용한다. <br />
+Page table을 구현하기 위해 array, list 등 어떤 data structure를 써도 상관없다. <br />
+하지만 project2 multi-oom test를 겪으면 performance가 얼마나 중요한 요인인지 알게된다. <br />
+Array는 간단하지만 처음 정의할 때 allocate할 memory size를 미리 정해야해서 낭비되는 memory가 발생할 수 있다. <br />
+Pintos에 미리 구현된 linked list는 traversing하거나 insert_ordered을 하면 시간이 오래 걸린다. <br />
+결국, pintos에 있는 또다른 structure인 hash table이 가장 효율적이다. <br />
+그런데 data structre를 배운지 오래돼서 hash table이 기억이 안 난다. <br />
+그래서 hash가 뭔지 복습해본다.</p>
+
+<h2 id="해시hash">해시(Hash)</h2>
+
+<p>해시 함수(hash function)는 임의의 데이터를 고정된 길이의 데이터로 매핑하는 함수이다. <br />
+이러한 매핑을 해싱(hashing), 원래 데이터를 <strong>키(key)</strong>, 매핑 후 데이터를 <strong>값(value)</strong>라고 한다. <br />
+예를 들어 원래 데이터가 1~9 사이 자연수이고 해싱 함수가 ‘3으로 나눈 나머지’일 때 1-&gt;1, 2-&gt;2, 3-&gt;0 …처럼 매핑할 수 있다. <br />
+위 예시에서 금방 알 수 있듯이, 데이터가 많으면 1-&gt;1, 4-&gt;1처럼 <u>여러 key가 동일한 value</u>를 가질 수 있다. <br />
+이러한 현상을 <strong>해시 충돌(collision)</strong>이라고 하는데 이 경우 linked list를 사용해서 문제를 해결하는 방법이 있다.</p>
+
+<h2 id="해시-테이블hash-table">해시 테이블(Hash Table)</h2>
+
+<p><strong>해시 테이블(hash table)</strong>은 hashing을 통해 구한 key-value pair를 저장한 data structure이다. <br />
+Key를 array의 index처럼 사용하는 거라고 생각하면 된다. <br />
+Python은 <strong>dictionary</strong> type이 hash table과 같은 역할을 한다.</p>
+
+<h3 id="dictionary-예시-programmers-문제">Dictionary 예시 (programmers 문제)</h3>
+<blockquote>
+  <p>마라톤에 참여한 선수들의 이름이 담긴 배열 participant와 완주한 선수들의 이름이 담긴 배열 completion이 주어질 때, 완주하지 못한 선수의 이름을 return하는 함수를 만들어주세요. <br />
+예시) participant=[“Kim”, “Lee”, “Park”], completion=[“Lee”, “Park”] <br />
+-&gt; result = “Kim”</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def solution(participant, completion):
+    # dictionary 선언은 {}로 한다.
+    players = {}
+    # dictionary key는 array index와 달리 숫자일 필요가 없다.
+    for player in participant:
+        if player not in players.keys():
+            players[player] = 1
+        else:
+            players[player] += 1
+            
+    for player in completion:
+        if players[player] &gt; 0:
+            players[player] -= 1
+            
+    answer = "".join([x for x, y in players.items() if players[x] &gt; 0])
+    return answer
+</code></pre></div></div>
+
+<blockquote>
+  <p>스파이가 가진 의상들이 담긴 2차원 배열 clothes가 주어질 때 서로 다른 옷의 조합의 수를 return하는 함수를 만들어주세요. <br />
+예시) clothes = [[“yellow_hat”, “headgear”], “blue_sunglasses”, “eyewear”, [“green_turban”, “headgear”]] <br />
+-&gt; result = 5</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def solution(clothes):
+    closet = {}
+    for c_name, c_type in clothes:
+        if c_type in closet:
+            closet[c_type] += 1
+        else:
+            # 안 입는 경우를 고려하여 2를 default로 한다
+            closet[c_type] = 2
+    answer = 1
+    for num in closet.values():
+        answer *= num
+    # 하나도 안 입는 경우 제외
+    answer -= 1
+    return answer
+</code></pre></div></div>
+
+<blockquote>
+  <p>노래 장르를 나타내는 배열 genres와 노래별 재생 횟수를 나타내는 배열 plays가 주어질 때, 베스트 앨범에 들어갈 노래의 고유 번호를 순서대로 return하는 함수를 만들어보세요. <br />
+베스트 앨범에 들어가는 기준:</p>
+  <ol>
+    <li>속한 노래가 많이 재생된 장르를 먼저 수록한다.</li>
+    <li>장르 내에서 많이 재생된 노래를 먼저 수록한다.</li>
+    <li>장르 내에서 재생 횟수가 같은 노래 중에서는 고유 번호가 낮은 노래를 먼저 수록한다.</li>
+  </ol>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def solution(genres, plays):
+    songs = {}
+    playcount = {}
+    # 장르별 총 재생횟수를 구하여 정렬
+    for i in range(len(genres)):
+        if genres[i] in playcount:
+            songs[genres[i]].append((i, plays[i]))
+            playcount[genres[i]] += plays[i]
+        else:
+            songs[genres[i]] = [(i, plays[i])]
+            playcount[genres[i]] = plays[i]
+
+    sorted_playcount = [genre for genre, count in sorted(playcount.items(), key=lambda x: x[1], reverse=True)]
+    
+    answer = []  
+    # 장르 내 노래별 재생횟수 정렬
+    for genre in sorted_playcount:
+        songlist = songs[genre]
+        sorted_songlist = sorted(songlist, key=lambda x: (-x[1], x[0]))
+
+        for i in range(len(songlist)):
+            if i &gt; 1:
+                break
+            else:
+                answer.append(sorted_songlist[i][0])
+    return answer
+</code></pre></div></div>
+
+<h2 id="chaining">Chaining</h2>
+
+<p>Pintos에 있는 hash table 구조는 chaining을 기반으로 한 data structure이다. <br />
+Chaining은 collision을 해결하는 방법 중 하나로 chain처럼 꼬리를 무는 방식으로 데이터를 계속 저장한다고 해서 붙여진 듯하다. <br />
+즉, 하나의 key에 여러개의 value가 있고 각 value는 chain처럼 연결된 형태이다. <br />
+Pintos는 value를 chain처럼 연결하기 위해 doubly linked list를 사용했다.</p>
+
+<h3 id="참고">참고</h3>
+<p><a href="https://en.wikipedia.org/wiki/Hash_table">위키백과: 해시테이블</a></p>
+:ET

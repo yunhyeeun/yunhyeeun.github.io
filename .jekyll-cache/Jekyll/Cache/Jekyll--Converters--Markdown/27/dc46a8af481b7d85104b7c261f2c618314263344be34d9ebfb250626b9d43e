@@ -1,0 +1,48 @@
+I"t<h2 id="서론">서론</h2>
+
+<p>pintos project3에서 supplemental page table을 구현하기 위해 hash table을 사용한다. <br />
+Page table을 구현하기 위해 array, list 등 어떤 data structure를 써도 상관없다. <br />
+하지만 project2 multi-oom test를 겪으면 performance가 얼마나 중요한 요인인지 알게된다. <br />
+Array는 간단하지만 처음 정의할 때 allocate할 memory size를 미리 정해야해서 낭비되는 memory가 발생할 수 있다. <br />
+Pintos에 미리 구현된 linked list는 traversing하거나 insert_ordered을 하면 시간이 오래 걸린다. <br />
+결국, pintos에 있는 또다른 structure인 hash table이 가장 효율적이다. <br />
+그런데 data structre를 배운지 오래돼서 hash table이 기억이 안 난다. <br />
+그래서 hash가 뭔지 복습해본다.</p>
+
+<h2 id="해시hash">해시(Hash)</h2>
+
+<p>해시 함수(hash function)는 임의의 데이터를 고정된 길이의 데이터로 매핑하는 함수이다. <br />
+이러한 매핑을 해싱(hashing), 원래 데이터를 키(key), 매핑 후 데이터를 값(value)라고 한다. <br />
+예를 들어 원래 데이터가 1~9 사이 자연수이고 해싱 함수가 ‘3으로 나눈 나머지’일 때 1-&gt;1, 2-&gt;2, 3-&gt;0 …처럼 매핑할 수 있다. <br />
+위 예시에서 금방 알 수 있듯이, 데이터가 많으면 1-&gt;1, 4-&gt;1처럼 여러 key가 동일한 value를 가질 수 있다. <br />
+이러한 현상을 해시 충돌(collision)이라고 하는데 이 경우 linked list를 사용해서 문제를 해결하는 방법이 있다.</p>
+
+<h2 id="해시-테이블hash-table">해시 테이블(Hash Table)</h2>
+
+<p>해시 테이블(hash table)은 hashing을 통해 구한 key-value pair를 저장한 data structure이다. <br />
+Key를 array의 index처럼 사용하는 거라고 생각하면 된다. <br />
+Python은 dictionary type이 hash table과 같은 역할을 한다.</p>
+
+<h3 id="dictionary-예시">Dictionary 예시</h3>
+<blockquote>
+  <p>마라톤에 참여한 선수들의 이름이 담긴 배열 participant와 완주한 선수들의 이름이 담긴 배열 completion이 주어질 때, 완주하지 못한 선수의 이름을 return하는 함수를 만들어주세요.</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def solution(participant, completion):
+    # dictionary 선언은 {}로 한다.
+    players = {}
+    # dictionary key는 array index와 달리 숫자일 필요가 없다.
+    for player in participant:
+        if player not in players.keys():
+            players[player] = 1
+        else:
+            players[player] += 1
+            
+    for player in completion:
+        if players[player] &gt; 0:
+            players[player] -= 1
+            
+    answer = "".join([x for x, y in players.items() if players[x] &gt; 0])
+    return answer
+</code></pre></div></div>
+:ET
