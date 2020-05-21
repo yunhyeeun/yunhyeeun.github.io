@@ -1,0 +1,58 @@
+I"<hr />
+
+<p>조교님들이 Q&amp;A에서 친절하게 문제를 설명해주셨다. <br />
+문제를 재정의해보자.</p>
+
+<h2 id="issues">Issues</h2>
+
+<ul>
+  <li>구현해야하는 핵심 기능: heteronym 판별 + 의미에 맞는 발음 선택
+-&gt; 한 문장 안에 pair로 등장했을 떄와 그렇지 않을 때 발음 구분하는 것은 technically equivalent</li>
+  <li>Priority 기준: heteronym의 수가 많을수록(pair 여부와 상관없이), 같은 ‘표기인’ heteronym이 동시에 등장하는 빈도가 높을수록 높은 ranking</li>
+  <li>같은 발음의 heteronym이 여러 번 반복할 경우 1번만 counting</li>
+</ul>
+
+<h2 id="approach">Approach</h2>
+
+<p>결국 한 문장 안에 ‘wind’가 한 번만 나타났더라도 counting을 해야하고 <em>‘wind’가 ‘바람’인지  ‘(실을) 감다’인지</em> 판단할 수 있어야 한다. <br />
+그렇다면 한 단어가 여러 발음으로 소리나는지 알면 heteronym 여부를 찾을 수 있지 않을까? <br />
+Nltk에는 CMU Pronouncing Dictionary(cmudict)가 있어서 단어와 각각의 발음을 확인할 수 있다. <br />
+단어가 갖고있는 발음의 종류가 여러개면 heteronym일 것이다. Heteronym을 구해보자.</p>
+
+<p>##</p>
+
+<p>발음 종류가 두 개 이상인 단어를 뽑았더니 9241개가 나왔다. Heteronym이 그만큼 많을리가 없다. <br />
+Heteronym을 print했더니 heteronym이 명백히 아닌 단어까지 포함되었다. <br />
+문제에서 예시로 제시한 heteronym의 발음기호를 살펴보자.</p>
+<blockquote>
+  <p>bass: [‘B’, ‘AE1’, ‘S’]  <br />
+         [‘B’, ‘EY1’, ‘S’] <br />
+wind: [‘W’, ‘AY1’, ‘N’, ‘D’]  <br />
+          [‘W’, ‘IH1’, ‘N’, ‘D’] <br />
+conduct: [‘K’, ‘AH0’, ‘N’, ‘D’, ‘AH1’, ‘K’, ‘T’] <br />
+         [‘K’, ‘AA1’, ‘N’, ‘D’, ‘AH0’, ‘K’, ‘T’] <br />
+frequent: [[‘F’, ‘R’, ‘IY1’, ‘K’, ‘W’, ‘AH0’, ‘N’, ‘T’]  <br />
+          [‘F’, ‘R’, ‘IY1’, ‘K’, ‘W’, ‘EH2’, ‘N’, ‘T’]]</p>
+</blockquote>
+
+<p>다음은 조교님께서 heteronym이 아니라고 언급한 단어들이다.</p>
+<blockquote>
+  <p>close: [‘K’, ‘L’, ‘OW1’, ‘S’] <br />
+        [‘K’, ‘L’, ‘OW1’, ‘Z’] <br />
+object: [‘AA1’, ‘B’, ‘JH’, ‘EH0’, ‘K’, ‘T’] <br />
+        [‘AH0’, ‘B’, ‘JH’, ‘EH1’, ‘K’, ‘T’]</p>
+</blockquote>
+
+<p>두 그룹 모두 발음 종류가 두 가지인데 왜 하나는 heteronym이고 다른 하나는 heteronym이 아닐까?</p>
+
+<h2 id="vowel-pronounciation">Vowel pronounciation</h2>
+
+<p>Vowel을 발음할 때 차이가 나타나는지 여부가 기준이라고 생각한다. <br />
+우리가 아는 알파벳과 달리 ‘AY1’, ‘IH1’처럼 이상한 기호가 발음 안에 있는 것을 확인할 수 있다. <br />
+Cmudict은 ARPABET이라는 발음체계를 사용하는데 phoneme과 allophone을 나타내기 위해 ‘AY1’같은 2-letter code를 사용한다고 한다. <br />
+그럼 숫자 1은 무엇을 나타내는 걸까? <br />
+숫자는 강세의 유형을 나타낸다고 한다. 0이면 no stress, 1이면 primary stress 등등. <br />
+Heteronym인 bass, wind, conduct, frequent 모두 vowel pronounciation에서만 차이가 난다.
+반면 close는 consonant pronounciation에서만 차이가 난다. <br />
+그렇다면 multiple pronounciation일 때 vowel pronounciation이 다를때만 heteronym라고 가정하자.</p>
+:ET
