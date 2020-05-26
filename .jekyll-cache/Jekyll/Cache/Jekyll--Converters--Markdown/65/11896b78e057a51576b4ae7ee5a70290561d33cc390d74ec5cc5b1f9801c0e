@@ -1,0 +1,9 @@
+I"<<p>pintos project3에서 supplemental page table을 구현하기 위해 hash table을 사용한다. <br />
+Page table을 구현하기 위해 array, list 등 어떤 data structure를 써도 상관없다. <br />
+하지만 project2 multi-oom test를 겪으면 performance가 얼마나 중요한 요인인지 알게된다. <br />
+Array는 간단하지만 처음 정의할 때 allocate할 memory size를 미리 정해야해서 낭비되는 memory가 발생할 수 있다. <br />
+Pintos에 미리 구현된 linked list는 traversing하거나 insert_ordered을 하면 시간이 오래 걸린다. <br />
+결국, pintos에 있는 또다른 structure인 hash table이 가장 효율적이다. <br />
+그런데 data structre를 배운지 오래돼서 hash table이 기억이 안 난다. <br />
+그래서 hash가 뭔지 복습해본다.</p>
+:ET

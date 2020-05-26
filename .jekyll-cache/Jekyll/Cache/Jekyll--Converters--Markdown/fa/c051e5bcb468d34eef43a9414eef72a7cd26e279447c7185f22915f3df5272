@@ -1,0 +1,46 @@
+I"r<p>Heteronym 과제를 끝냈다. 중간 과정을 포스팅하지 않아서 해결과정과 리뷰를 간략하게 요약하고 마무리해야겠다.</p>
+
+<h2 id="문제-설명">문제 설명</h2>
+<blockquote>
+  <p>Heteronym이 있는 문장과, 각 heteronym에 맞는 발음 기호를 주어진 기준에 따라 정렬해 보세요.</p>
+</blockquote>
+
+<p>무조건 지켜야하는 ranking 기준은 없지만 아래와 같이 ranking하면 좋다고 조교님께서 말씀해주셨다.</p>
+
+<ol>
+  <li>Heteronym 개수가 많은 순으로 우선 정렬</li>
+  <li>Heteronym 개수가 같을 경우
+    <ul>
+      <li>High: 표기는 같지만 발음이 다른 문장 (wind/wind/, wind/waind/)</li>
+      <li>Medium: 표기가 다른 문장 (wind, tear)</li>
+      <li>Low: 표기도 같고 발음도 같은 문장 (wind/wind/, wind/wind/)</li>
+    </ul>
+  </li>
+  <li>문장이 짧으면 or heteronym pos가 다르면 높은 순위</li>
+</ol>
+
+<h2 id="해결-과정">해결 과정</h2>
+
+<p>문제를 풀기 위해 크게 세 단계로 나누었다.</p>
+
+<ol>
+  <li><u>Heteronym 찾기<u></u></u></li>
+  <li><u>Input text 찾기<u></u></u></li>
+  <li><u>Pronouncing annotation 찾기 &amp; ranking하기<u></u></u></li>
+</ol>
+
+<h3 id="step-1">Step 1</h3>
+<p>이전 글을 쓸 때 step1을 한창 짜고 있었는데 외부 library를 사용해도 된다는 말을 듣고 급히 수정했다. <br />
+<br />
+기존 코드는 cmudict를 사용해서 multiple pronunciation word를 찾았다. 그 결과 5000개 정도의 단어를 찾았고 이 모든 단어가 heteronym이 아닌건 확실하기 때문에 조건을 추가해야했다. <br />
+<br />
+<strong>Wordnet</strong>을 사용해서 synonym set이 없거나 하나인 경우를 제외했다. 그리고 <strong>Lemma</strong>인 단어만 heteronym으로 생각하기로 했다. <br />
+예를 들어 기본형인 rebel을 heteronym list에 추가했다면 변형인 rebels, rebeled, rebellion은 heteronym list에 추가하지 않기로 했다. <br />
+이 과정은 Lemmatizer 함수를 사용해서 단어의 기본형을 찾고 추가로 suffix list를 만들어서 <em>suffix를 포함하고 있는 단어를 제외</em>하기로 했다. <br />
+<br />
+이제 1000개 단어가 남았고 이 단어를 <strong>Wiktionary</strong>에 검색해서 자세히 검토하기로 했다. 사실 처음부터 Wiktionary를 검색하면 되지만 그러면 run time이 너무 길어서 디버깅도 힘들고 채점하시기에도 좋지 못할 것 같아서 후보를 최대한 줄인 다음에 검색하기로 했다.
+<br />
+후보 단어의 <u>etymology가 여러개인지</u>, 여러개라면 각각의 발음 기호를 확인하고 다르면 heteronym인게 확실하다. 이 때 발음이 기호가 다른 것이 미국식 발음과 영국식 발음이어서 다른게 아니라 미국식 발음 내에서 다르다는 것을 의미한다. <br />
+Etymology가 하나라도 POS가 다르고 <u>각 POS별로 발음이 다르게 될 수도 있으니</u> 그것도 확인한다. Wiktionary에서 발음에 대한 설명이 없는 경우도 있는데 이는 일반적인 단어가 아니거나, 고유명사이거나, 외국어 등의 이유여서 heteronym이 아닌 것으로 간주했다. Wiktionary 검색까지 다 하면 100 여개의 heteronym을 찾는다. 다음 단계에서 이 긴 과정을 반복하기 싫어서 heteronym information은 csv file에 따로 저장했다.</p>
+
+:ET
