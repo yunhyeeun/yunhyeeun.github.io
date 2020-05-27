@@ -1,0 +1,53 @@
+I"[
+<p>Sorting은 굉장히 많이 쓰인다. Programmers 코딩테스트 연습에서 sorting 문제를 풀어보았다. 주로 python의 sorted 함수를 사용해서 문제를 풀어보았다.</p>
+
+<h2 id="k번째-수">K번째 수</h2>
+
+<blockquote>
+  <p>배열 array, [i, j, k]를 원소로 가진 2차원 배열 commands가 매개변수로 주어질 때 배열 array의 i번째 숫자부터 j번째 숫자까지 자르고 정렬했을 때, k번째에 있는 수를 구해보세요.</p>
+</blockquote>
+
+<p>예를 들어 array가 [1, 5, 2, 6, 3, 7, 4], i = 2, j = 5, k = 3이라면 array의 2번째부터 5번째까지 자르면 [5, 2, 6, 3]이다. 이를 정렬하면 [2, 3, 5, 6]이고 3번째 숫자는 5다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def solution(array, commands):
+    answer = []
+    for start,end,order in commands :
+        array_temp = sorted(array[start-1:end])
+        answer.append(array_temp[order-1])
+    return answer
+</code></pre></div></div>
+
+<h2 id="가장-큰-수">가장 큰 수</h2>
+
+<blockquote>
+  <p>0 또는 양의 정수가 담긴 배열 numbers가 매개변수로 주어질 때, 순서를 재배치하여 만들 수 있는 가장 큰 수를 문자열로 바꾸어 return 하도록 solution 함수를 작성해주세요. <br />
+(numbers의 길이는 1 이상 100,000 이하, numbers의 원소는 0 이상 1,000 이하이다.)</p>
+</blockquote>
+
+<p>예를 들어 주어진 정수가 [6, 10, 2]라면 [6102, 6210, 1062, 1026, 2610, 2106]를 만들 수 있고, 이중 가장 큰 수인 6210을 return한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def solution(numbers):
+    answer = ''
+    sorted_numbers = sorted([ str(num) for num in numbers ], key=lambda x: (x*4)[:4], reverse=True)
+    answer = "".join(sorted_numbers)
+    if answer.startswith("0"):
+        answer = "0"
+    return answer
+</code></pre></div></div>
+
+<h2 id="h-index">H-Index</h2>
+
+<blockquote>
+  <p>어떤 과학자가 발표한 논문의 인용 횟수를 담은 배열 citations가 매개변수로 주어질 때, 이 과학자의 H-Index를 구하세요. <br />
+H-Index: 어떤 과학자가 발표한 논문 n편 중, h번 이상 인용된 논문이 h편 이상이고 나머지 논문이 h번 이하 인용되었을 때 h의 최댓값</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def solution(citations):
+    sorted_c = sorted(citations,reverse=True)
+    for i in range(len(sorted_c)):
+        if sorted_c[i] &lt; i+1:
+            return i
+    return len(citations)
+</code></pre></div></div>
+
+:ET
