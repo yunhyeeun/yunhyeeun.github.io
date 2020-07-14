@@ -1,0 +1,100 @@
+I"�<p>프론트엔드를 공부할 때 가장 먼저 배우는 것은 HTML, CSS Javascript이다. 그 중 HTML에 대해 간략이 정리하고자 한다.</p>
+
+<blockquote>
+  <p>HTML은 웹페이지의 구조를 설명하는 markup 언어다.</p>
+</blockquote>
+
+<p>Markup 언어는 우리가 일기 쓰듯이 줄글로 쓰지 않고 어느정도 구조를 띈 언어를 말한다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;h1&gt;</span>제목<span class="nt">&lt;/h1&gt;</span>
+<span class="c">&lt;!-- &lt;TAG&gt;CONTENT&lt;/TAG&gt; --&gt;</span>
+<span class="nt">&lt;p&gt;</span>HTML은 "opening tag + content + closing tag"처럼 쓰면 된다.<span class="nt">&lt;/p&gt;</span>
+</code></pre></div></div>
+
+<p>HTML은 head와 body로 나눌 수 있다. Head는 사용자에게 보여지지 않는 주로 metadata를 저장하는 공간이고 Body는 사용자에게 보여지는 공간이다.</p>
+
+<p>HTML을 작성한다고 하면 보통 아래 코드에서부터 시작한다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+  <span class="c">&lt;!-- metadata를 쓰는 공간 --&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+  <span class="c">&lt;!-- 실제 user에게 보여지는 공간 --&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="tag">Tag</h2>
+
+<p>HTML tag는 매우 많고 다양하다. 다시 말해 모든 tag를 외울 수 없다. 하지만 자주 쓰이거나, 중요한 tag는 쓰다보면 자연스럽게 외워진다. Tag는 크게 두 유형으로 나눌 수 있다.</p>
+
+<ol>
+  <li>
+    <p>Container</p>
+
+    <p>Item을 담는 구조물로 사용자가 볼 수 없다. (CSS로 커스터마이징 가능)</p>
+
+    <p>예) header, footer, aside, main, div, span …</p>
+  </li>
+  <li>
+    <p>Item</p>
+
+    <p>사용자가 볼 수 있는 내용이다.</p>
+
+    <p>예) button, input, label, img, audio, table …</p>
+  </li>
+</ol>
+
+<h3 id="container">Container</h3>
+
+<p>HTML은 웹페이지의 구조를 설명할 수 있기 때문에 아무 웹페이지를 갖고와도 header, main, aside, nav와 같은 container로 분석할 수 있다.</p>
+
+<p><img src="/assets/images/image1.png" alt="image1" /></p>
+
+<p><del>이게 정답은 아니고 이렇게 분석할 수 있다 정도의 느낌정도로 이해하자.</del></p>
+
+<h3 id="item">Item</h3>
+
+<p>Item도 block과 inline 두 가지로 나눌 수 있다. Block은 한 줄에 하나의 item만 들어가는 특징을 말하고 inline은 한 줄에 여러 개의 item을 넣을 수 있는 특징을 말한다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Block --&gt;</span>
+<span class="nt">&lt;p&gt;</span>
+이 문장은 block인 div를 사용한 문장이다.<span class="nt">&lt;div&gt;</span>That<span class="nt">&lt;/div&gt;</span> is a block tag.
+<span class="nt">&lt;/p&gt;</span>
+<span class="c">&lt;!-- Inline --&gt;</span>
+<span class="nt">&lt;p&gt;</span>
+이 문장은 inline인 span을 사용한 문장이다.
+<span class="nt">&lt;/p&gt;</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/Screen Shot 2020-07-14 at 6.22.59 PM.png" alt="Screen Shot 2020-07-14 at 6.22.59 PM" /></p>
+
+<p>(설명을 위해 container tag를 사용했다.)</p>
+
+<h2 id="주요-tag-list">주요 Tag List</h2>
+
+<ol>
+  <li>
+    <p>h1~h6 : 제목. 숫자가 작을수록 중요한 느낌</p>
+  </li>
+  <li>
+    <p>p : 문단.</p>
+  </li>
+  <li>a : 하이퍼링크</li>
+  <li>Input: 입력창 (텍스트, 숫자, 파일 등등)</li>
+  <li>Button: 버튼</li>
+  <li>img: 이미지</li>
+</ol>
+
+<p><img src="/images/Screen Shot 2020-07-14 at 6.40.37 PM.png" alt="Screen Shot 2020-07-14 at 6.40.37 PM" /></p>
+
+<h2 id="요약">요약</h2>
+
+<ol>
+  <li>html은 <tag>내용</tag>로 적으면 된다.</li>
+  <li>Html 많이 쓰다보면 tag는 저절로 외워진다.</li>
+  <li>구글링을 적극 활용하자</li>
+</ol>
+:ET
