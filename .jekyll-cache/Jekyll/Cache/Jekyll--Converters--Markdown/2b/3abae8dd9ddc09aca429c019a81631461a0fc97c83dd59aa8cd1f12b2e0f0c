@@ -1,0 +1,101 @@
+I"�<p>코테 연습을 이제껏 파이썬으로 했었는데 자바로 연습하려 한다. 최근 수업에 사용한 언어가 파이썬이어서 파이썬을 사용했을 뿐 원래는 자바 실력을 계속 향상시키려 했다. 오랜만에 자바를 써서 구현 속도도 느리고 효율성은 커녕 정확한 코드를 짜기도 버거웠다.</p>
+
+<blockquote>
+  <p>완전 탐색은 모든 경우의 수를 탐색하는 방법이다.</p>
+</blockquote>
+
+<p>완전 탐색은 효율성이 떨어진다고 볼 수 있지만 답을 찾을 수 있는 확실한 방법이다. DFS와 BFS는 그런 경우(경로)를 탐색하는 방법이다. 항상 헷갈렸던 DFS, BFS로 자바를 연습했다.</p>
+
+<h2 id="dfs-vs-bfs">DFS vs BFS</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">종류</th>
+      <th style="text-align: center">DFS</th>
+      <th style="text-align: center">BFS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">뜻</td>
+      <td style="text-align: center">깊이 우선 탐색</td>
+      <td style="text-align: center">너비 우선 탐색</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">구현 방법</td>
+      <td style="text-align: center">재귀함수(stack)</td>
+      <td style="text-align: center">queue</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">활용</td>
+      <td style="text-align: center">백트랙킹</td>
+      <td style="text-align: center">최단경로</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">특징</td>
+      <td style="text-align: center">동시 변화 적용 x</td>
+      <td style="text-align: center">동시 변화 적용 o</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="pseudocode">Pseudocode</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// DFS에서 체크인과 체크아웃의 indent는 같아야함
+function dfs() {
+    1. 체크인
+    2. 목적지인가?
+    3. 갈 수 있는 곳 순회
+    4.   갈 수 있는가?
+    5.     간다
+    6. 체크아웃
+}
+
+// BFS를 실행하기 전 시작점을 큐에 넣고 큐가 empty일 때까지 BFS 반복
+function bfs() {
+    1. 큐에서 꺼내옴
+    2. 목적지인가?
+    3. 갈 수 있는 곳 순회
+    4.   갈 수 있는가?
+    5.     체크인
+    6.     큐에 넣음
+}
+</code></pre></div></div>
+
+<h2 id="완전-탐색">완전 탐색</h2>
+<p>완전 탐색은 재귀 함수로 구현된다. 재귀 함수를 구현할 때 중요한 포인트를 몇 개 찝어보았다.</p>
+
+<ol>
+  <li>하나의 큰 문제를 여러 개의 작은 문제로 나누기</li>
+  <li>각 작은 문제를 정의하기 위한 <strong>상태 정보</strong> 설계하기</li>
+  <li>각 작은 문제의 상태가 원하는 정답인지(<strong>종결 여부</strong>) 판별하는 조건 설계하기</li>
+  <li>각 작은 문제에서 다음 하위 문제를 <strong>탐색할 조건</strong> 설계하기</li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function recursion(StateParameters) {
+    if (terminationCondition) {
+        return;
+    }
+    else {
+        while (searchCondition) {
+            recursion(Parameters);
+        }
+    }
+}
+</code></pre></div></div>
+
+<h2 id="문제-풀기">문제 풀기</h2>
+
+<p>위 pseudocode를 사용해서 문제를 풀어보자.</p>
+
+<p><a href="https://www.acmicpc.net/problem/1062">백준 1062번 가르침</a> <br />
+남극에 사는 김지민 선생님은 학생들이 되도록이면 많은 단어를 읽을 수 있도록 하려고 한다. 그러나 지구온난화로 인해 얼음이 녹아서 곧 학교가 무너지기 때문에, 김지민은 K개의 글자를 가르칠 시간 밖에 없다. 김지민이 가르치고 난 후에는, 학생들은 그 K개의 글자로만 이루어진 단어만을 읽을 수 있다. 김지민은 어떤 K개의 글자를 가르쳐야 학생들이 읽을 수 있는 단어의 개수가 최대가 되는지 고민에 빠졌다.</p>
+
+<p>남극언어의 모든 단어는 “anta”로 시작되고, “tica”로 끝난다. 남극언어에 단어는 N개 밖에 없다고 가정한다. 학생들이 읽을 수 있는 단어의 최댓값을 구하는 프로그램을 작성하시오.</p>
+
+<p>첫째 줄에 단어의 개수 N과 K가 주어진다. N은 50보다 작거나 같은 자연수이고, K는 26보다 작거나 같은 자연수 또는 0이다. 둘째 줄부터 N개의 줄에 남극 언어의 단어가 주어진다. 단어는 영어 소문자로만 이루어져 있고, 길이가 8보다 크거나 같고, 15보다 작거나 같다. 모든 단어는 중복되지 않는다.</p>
+
+<p>첫째 줄에 김지민이 K개의 글자를 가르칠 때, 학생들이 읽을 수 있는 단어 개수의 최댓값을 출력한다.</p>
+
+:ET

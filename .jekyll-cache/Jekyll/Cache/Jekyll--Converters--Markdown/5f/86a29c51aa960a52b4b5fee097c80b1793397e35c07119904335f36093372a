@@ -1,0 +1,99 @@
+I"~<p>코테 연습을 이제껏 파이썬으로 했었는데 자바로 연습하려 한다. 최근 수업에 사용한 언어가 파이썬이어서 파이썬을 사용했을 뿐 원래는 자바 실력을 계속 향상시키려 했다. 오랜만에 자바를 써서 구현 속도도 느리고 효율성은 커녕 정확한 코드를 짜기도 버거웠다.</p>
+
+<blockquote>
+  <p>완전 탐색은 모든 경우의 수를 탐색하는 방법이다.</p>
+</blockquote>
+
+<p>완전 탐색은 효율성이 떨어진다고 볼 수 있지만 답을 찾을 수 있는 확실한 방법이다. DFS와 BFS는 그런 경우(경로)를 탐색하는 방법이다. 항상 헷갈렸던 DFS, BFS로 자바를 연습했다.</p>
+
+<h2 id="dfs-vs-bfs">DFS vs BFS</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">종류</th>
+      <th style="text-align: center">DFS</th>
+      <th style="text-align: center">BFS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">뜻</td>
+      <td style="text-align: center">깊이 우선 탐색</td>
+      <td style="text-align: center">너비 우선 탐색</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">구현 방법</td>
+      <td style="text-align: center">재귀함수(stack)</td>
+      <td style="text-align: center">queue</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">활용</td>
+      <td style="text-align: center">백트랙킹</td>
+      <td style="text-align: center">최단경로</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">특징</td>
+      <td style="text-align: center">동시 변화 적용 x</td>
+      <td style="text-align: center">동시 변화 적용 o</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="pseudocode">Pseudocode</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// DFS에서 체크인과 체크아웃의 indent는 같아야함
+function dfs() {
+    1. 체크인
+    2. 목적지인가?
+    3. 갈 수 있는 곳 순회
+    4.   갈 수 있는가?
+    5.     간다
+    6. 체크아웃
+}
+
+// BFS를 실행하기 전 시작점을 큐에 넣고 큐가 empty일 때까지 BFS 반복
+function bfs() {
+    1. 큐에서 꺼내옴
+    2. 목적지인가?
+    3. 갈 수 있는 곳 순회
+    4.   갈 수 있는가?
+    5.     체크인
+    6.     큐에 넣음
+}
+</code></pre></div></div>
+
+<h2 id="완전-탐색">완전 탐색</h2>
+<p>완전 탐색은 재귀 함수로 구현된다. 재귀 함수를 구현할 때 중요한 포인트를 몇 개 찝어보았다.</p>
+
+<ol>
+  <li>하나의 큰 문제를 여러 개의 작은 문제로 나누기</li>
+  <li>각 작은 문제를 정의하기 위한 <strong>상태 정보</strong> 설계하기</li>
+  <li>각 작은 문제의 상태가 원하는 정답인지(<strong>종결 여부</strong>) 판별하는 조건 설계하기</li>
+  <li>각 작은 문제에서 다음 하위 문제를 <strong>탐색할 조건</strong> 설계하기</li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function recursion(StateParameters) {
+    if (terminationCondition) {
+        return;
+    }
+    else {
+        while (searchCondition) {
+            recursion(Parameters);
+        }
+    }
+}
+</code></pre></div></div>
+
+<h2 id="문제-풀기">문제 풀기</h2>
+
+<p>위 pseudocode를 사용해서 문제를 풀어보자.</p>
+
+<p><a href="https://www.acmicpc.net/problem/1062">백준 1062번 가르침</a></p>
+
+<p><del>(문제 설명은 생략한다.)</del>
+모든 단어에 a, c, i, n, t가 들어가므로 K가 5보다 작으면 단어를 하나도 읽을 수 없다. <br />
+물론 K가 알파벳 수인 26 이상이면 모든 단어를 읽을 수 있다. <br />
+<br /></p>
+
+:ET

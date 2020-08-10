@@ -1,0 +1,43 @@
+I"�<p>코테 연습을 이제껏 파이썬으로 했었는데 자바로 연습하려 한다. 최근 수업에 사용한 언어가 파이썬이어서 파이썬을 사용했을 뿐 원래는 자바 실력을 계속 향상시키려 했다. 오랜만에 자바를 써서 구현 속도도 느리고 효율성은 커녕 정확한 코드를 짜기도 버거웠다.</p>
+
+<blockquote>
+  <p>완전 탐색은 모든 경우의 수를 탐색하는 방법이다.</p>
+</blockquote>
+
+<p>완전 탐색은 효율성이 떨어진다고 볼 수 있지만 답을 찾을 수 있는 확실한 방법이다. DFS와 BFS는 그런 경우(경로)를 탐색하는 방법이다. 항상 헷갈렸던 DFS, BFS로 자바를 연습했다.</p>
+
+<h2 id="dfs-vs-bfs">DFS vs BFS</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">종류</th>
+      <th style="text-align: center">DFS</th>
+      <th style="text-align: center">BFS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">뜻</td>
+      <td style="text-align: center">깊이 우선 탐색</td>
+      <td style="text-align: center">너비 우선 탐색</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">구현 방법</td>
+      <td style="text-align: center">재귀함수(stack)</td>
+      <td style="text-align: center">queue</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">활용</td>
+      <td style="text-align: center">백트랙킹</td>
+      <td style="text-align: center">최단경로</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">특징</td>
+      <td style="text-align: center">동시 변화 적용 x</td>
+      <td style="text-align: center">동시 변화 적용 o</td>
+    </tr>
+  </tbody>
+</table>
+
+:ET
