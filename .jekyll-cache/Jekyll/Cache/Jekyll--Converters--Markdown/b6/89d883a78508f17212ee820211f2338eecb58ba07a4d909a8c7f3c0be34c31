@@ -1,0 +1,168 @@
+I"�<blockquote>
+  <p>Data structure는 효율적으로 접근하고 수정할 수 있도록 데이터를 구성하고 저장하는 방법을 말한다.</p>
+</blockquote>
+
+<p>선형 구조 : 데이터가 일렬로 나열 <br />
+    array, linked list, stack, queue</p>
+
+<p>비선형 구조 : 데이터가 특정한 형태를 띄고 있음 <br />
+    tree, graph</p>
+
+<ol>
+  <li>array
+    <ul>
+      <li>접근이 쉬움</li>
+      <li>insert/delete가 어려움</li>
+    </ul>
+  </li>
+  <li>linked list
+    <ul>
+      <li>접근이 느림</li>
+      <li>insert/delete가 쉬움</li>
+      <li>prev/next에 대한 포인터 필요</li>
+    </ul>
+  </li>
+  <li>stack
+    <ul>
+      <li>나중에 삽입된 데이터가 먼저 삭제되는 구조 (LIFO)</li>
+      <li>top 위치에 새로운 데이터를 삽입</li>
+    </ul>
+  </li>
+  <li>queue
+    <ul>
+      <li>먼저 삽입된 데이터가 먼저 삭제되는구조 (FIFO)</li>
+      <li>front(head) : 삭제될 위치</li>
+      <li>rear(tail) : 삽입된 위치</li>
+    </ul>
+  </li>
+  <li>tree
+    <ul>
+      <li>parent-child relationship</li>
+      <li>root node : 최상위 노드</li>
+      <li>depth : root에서 해당 노드까지 도달하는데 사용하는 간선의 개수</li>
+      <li>height : root에서 해당 노드까지 도달하는 지나간 정점의 개수 (보통 가장 큰 값을 의미)</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="binary-tree">Binary tree</h2>
+<p>모든 노드의 child 개수가 2개 이하(left child, right child)</p>
+
+<ul>
+  <li>array로 binary tree 구현 가능</li>
+</ul>
+
+<h3 id="class로-tree-구현하기">Class로 tree 구현하기</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Node {
+    Object data
+    Node left_child, right_child
+}
+</code></pre></div></div>
+<h3 id="array로-tree-구현하기">Array로 tree 구현하기</h3>
+<ol>
+  <li>root node를 array[1]에 저장</li>
+  <li>임의의 parent node의 index를 p라고 하자</li>
+  <li>left child의 index는 2p</li>
+  <li>right child의 index는 2p+1</li>
+</ol>
+
+<h3 id="binary-tree-iteration">Binary tree iteration</h3>
+
+<ol>
+  <li>
+    <p>pre-order : current node -&gt; left child -&gt; right child</p>
+  </li>
+  <li>
+    <p>in-order : left child -&gt; current node -&gt; right child</p>
+  </li>
+  <li>
+    <p>post-order : left child -&gt; right child -&gt; current node</p>
+  </li>
+</ol>
+
+<h2 id="heap">Heap</h2>
+
+<p>heap : complete binary tree + (parent node value &gt; child node value) or (parent node value &lt; child node value)</p>
+
+<h3 id="heap-insert">Heap Insert</h3>
+
+<ol>
+  <li>마지막 위치에 insert</li>
+  <li>추가한 node와 부모를 비교</li>
+  <li>heap 조건에 맞춰 swap</li>
+  <li>heap 조건에 만족하거나 추가한 node가 root에 도달할 때까지 반복</li>
+</ol>
+
+<h3 id="heap-delete">Heap Delete</h3>
+
+<ol>
+  <li>root 삭제</li>
+  <li>마지막 node를 root로 이동</li>
+  <li>root와 child를 비교</li>
+  <li>heap 조건에 맞춰 swap</li>
+  <li>heap 조건에 만족하거나 leaf node에 도달할 때까지 반복</li>
+</ol>
+
+<h2 id="priority-queue">Priority Queue</h2>
+
+<p>단순 queue가 아니라 특정 조건에 따라 data 별로 priority를 부여한 다음 queue에서 poll할 때 priority가 가장 높은 data를 꺼냄</p>
+
+<p><strong>우선순위를 heap condition으로 가지는 heap으로 구현</strong></p>
+
+<h2 id="indexed-tree">Indexed Tree</h2>
+
+<p>data를 tree의 leaf node로 지정한 후 각각의 parent node는 child의 합이나 count 등등 요구조건에 맞춰 정의</p>
+
+<p><strong>perfect binary tree이기 때문에 부족한 leaf node에 대한 초기값을 설정해야 함</strong></p>
+
+<p>보통 특정 행동을 반복 수행하는데 중간에 행동 결과가 달라지는 행동을 할 때 사용하면 편하다. <br />
+(예. array 구간합을 구하는데 중간에 array value가 바뀔 때)</p>
+
+<h2 id="indexed-tree-create">Indexed Tree Create</h2>
+
+<ol>
+  <li>leaf node 개수가 N개 이상이 되도록 높이가 T인 tree array를 만든다. (배열 크기 : 2^T)</li>
+  <li>leaf node에 data 추가 (array idx : 2^(T-1) ~ N-1)</li>
+  <li>array idx 2^(T-1) - 1부터 1 순서대로 left child &amp; right child을 참조하여 data 추가</li>
+</ol>
+
+<h2 id="indexed-tree-query">Indexed Tree Query</h2>
+
+<p>예시. 구간합 문제
+이 때 indexed tree는 parent가 child의 합으로 이루어져있다고 가정</p>
+<ol>
+  <li>root에서 시작하여 pre-order iteration 진행</li>
+  <li>current node가 원하는 구간에 완전히 속해있으면 current node data return</li>
+  <li>(left child data + right child data) return</li>
+</ol>
+
+<h2 id="indexed-tree-update">Indexed Tree Update</h2>
+
+<ol>
+  <li>node data update</li>
+  <li>update parent data</li>
+</ol>
+
+<h2 id="trie">Trie</h2>
+
+<p>K진 tree (tree node child 개수가 2보다 큰 K개)</p>
+<ul>
+  <li>문자열을 빠르게 검색할 수 있는 구조</li>
+  <li>root는 항상 공백 상태</li>
+</ul>
+
+<h3 id="trienode">TrieNode</h3>
+<p>class Node {
+     Object data
+     Node child[]
+ }</p>
+
+<h3 id="search-trie">Search Trie</h3>
+
+<ol>
+  <li>root부터 시작하여 찾는 단어의 첫 글자부터 탐색</li>
+  <li>current node의 child 중 해당하는 글자가 있다면 아래로 이동</li>
+  <li>그렇지 않다면 존재하지 않는 단어로 처리</li>
+</ol>
+
+:ET
