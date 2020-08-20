@@ -1,0 +1,187 @@
+I"�<p><br />
+Graph : vertex + edge</p>
+
+<p>undirected edge vs directed edge : edge의 방향성유무</p>
+
+<ul>
+  <li>in-degree : vertex로 들어오는 edge의 수</li>
+  <li>out-degree : vertex에서 나가는 edge의 수</li>
+</ul>
+
+<h2 id="그래프-구현-방법">그래프 구현 방법</h2>
+
+<ol>
+  <li>
+    <p>Edge list <br />
+Edge의 개수가 E일 경우 E * 2(3) 이차원 array 생성 <br />
+Edge 별 vertex 정보와 weight 저장</p>
+  </li>
+  <li>
+    <p>Adjacency matrix <br />
+vertex 개수가 V일 경우 V * V 이차원 array 생성 <br />
+vertex 간 edge가 있다면 1, 없으면 0 저장(weight가 있다면 weight 저장) <br />
+vertex 가 많으면 메모리 낭비</p>
+  </li>
+  <li>
+    <p>Adjacent list <br />
+vertex 개수가 V일 경우 V개의 list 생성 <br />
+각 list 별 연결된 vertex 정보 저장
+dijestra에 이용</p>
+  </li>
+</ol>
+
+<h2 id="union-find">Union-Find</h2>
+
+<p>Disjoint Set : 서로소 집합
+Union(x, y) : x가 속한 집합과 y가 속한 집합을 합친다
+Find(x) : x가 속한 집합의 대표값을 return</p>
+<ul>
+  <li>주로 tree로 구현
+<br />
+<a href="https://www.acmicpc.net/problem/1717">백준 1717 집합의 표현</a></li>
+</ul>
+
+<p>union-find를 구현하는 문제이다. 트리를 쓰지 않고 집합의 대표값을 저장하는 배열만 사용해도 통과할 수 있다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>N = Integer.parseInt(st.nextToken());
+M = Integer.parseInt(st.nextToken());
+parent = new int[N + 1];
+for (int i = 1;i &lt;= N;i++) {
+    parent[i] = i;
+}
+for (int i = 0;i &lt; M;i++) {
+    st = new StringTokenizer(br.readLine());
+    int func = Integer.parseInt(st.nextToken());
+    int a = Integer.parseInt(st.nextToken());
+    int b = Integer.parseInt(st.nextToken());
+    // union
+    if (func == 0) {
+        union(a, b);
+    }
+    // find
+    else {
+        int aRoot = find(a);
+        int bRoot = find(b);
+        if (aRoot == bRoot) {
+            System.out.println("YES");
+        } else {
+            System.out.println("NO");
+        }
+    }
+}
+</code></pre></div></div>
+<p><br />
+<a href="https://www.acmicpc.net/problem/3830">백준 3830 교수님은 기다리지 않는다</a></p>
+
+<p>이 문제도 union-find를 구현하는 문제다. 위 문제와 차이점은 무게에 대한 정보에 대해서도 union-find를 해야하는데 이를 계산하는 식을 생각하기 어려웠다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>while (true) {
+    st= new StringTokenizer(br.readLine());
+    N = Integer.parseInt(st.nextToken());
+    M = Integer.parseInt(st.nextToken());
+    if (N == 0 &amp;&amp; M == 0) {
+        break;
+    }
+    parent = new int[N + 1];
+    weight = new int[N + 1];
+    for (int i = 1;i &lt;= N;i++) {
+        parent[i] = i;
+    }
+    for (int i = 0;i &lt; M;i++) {
+        String[] inputs = br.readLine().split(" ");
+        if (inputs[0].equals("!")) {
+            int a = Integer.parseInt(inputs[1]);
+            int b = Integer.parseInt(inputs[2]);
+            int w = Integer.parseInt(inputs[3]);
+            measure(a, b, w);
+        } else {
+            int a = Integer.parseInt(inputs[1]);
+            int b = Integer.parseInt(inputs[2]);
+            check(a, b);
+        }
+    }
+}
+
+public static void check(int a, int b) {
+    if (find(a) != find(b)) {
+        System.out.println("UNKNOWN");
+    } else {
+        System.out.println(weight[b] - weight[a]);
+    }
+}
+public static void measure(int a, int b, int w) {
+    int aRoot = find(a);
+    int bRoot = find(b);
+    if (aRoot != bRoot) {
+        parent[bRoot] = aRoot;
+        weight[bRoot] = weight[a] - weight[b] + w;
+    }
+}
+
+public static int find(int a) {
+    if (parent[a] == a) {
+        return a;
+    } else {
+        int tmp = find(parent[a]);
+        weight[a] += weight[parent[a]];
+        return parent[a] = find(parent[a]);
+    }
+}
+</code></pre></div></div>
+
+<h2 id="dagdirected-acyclic-graph">DAG(Directed Acyclic Graph)</h2>
+<p>: 순환을 가지지 않는 방향그래프 <br />
+위상정렬 : DAG에서 그래프의 방향성을 거스르지 않고 vertex를 나열</p>
+<BFS 이용="">   
+
+1. in-degree(predecessor)가 없으면 enqueue   
+2. enqueue 된 predecessor가 있는 successor의 in-degree를 -1   
+3. predecessor == 0이면 enqueue   
+4. queue가 빌 때까지 반복   
+
+<br />
+[백준 2252 줄 세우기](https://www.acmicpc.net/problem/2252)
+
+키 순으로 학생들을 줄을 세운다면 작은 학생은 큰 학생의 predecessor가 된다. 주어진 입력값에서 자기보다 작은 학생의 수를 count한 후 BFS를 실행하면 답을 구할 수 있다.
+
+```
+N = Integer.parseInt(st.nextToken());
+M = Integer.parseInt(st.nextToken());
+list = new ArrayList[N + 1];
+indegree = new int[N + 1];
+for (int i = 1;i &lt;= N;i++) {
+    list[i] = new ArrayList&lt;&gt;();
+}
+for (int i = 0;i &lt; M;i++) {
+    st = new StringTokenizer(br.readLine());
+    int a = Integer.parseInt(st.nextToken());
+    int b = Integer.parseInt(st.nextToken());
+    list[a].add(b);
+    indegree[b]++;
+}
+
+Queue<Integer> q = new LinkedList&lt;&gt;();
+for (int i = 1;i &lt;= N;i++) {
+    if (indegree[i] == 0) {
+        q.add(i);
+    }
+}
+while (true) {
+    if (q.isEmpty()) {
+        break;
+    }
+    int student = q.poll();
+    sb.append(student);
+    sb.append(" ");
+    for (int next : list[student]) {
+        indegree[next]--;
+        if (indegree[next] == 0) {
+            q.add(next);
+        }
+    }	
+}
+System.out.println(sb.toString());
+```
+
+</Integer></BFS>
+:ET
