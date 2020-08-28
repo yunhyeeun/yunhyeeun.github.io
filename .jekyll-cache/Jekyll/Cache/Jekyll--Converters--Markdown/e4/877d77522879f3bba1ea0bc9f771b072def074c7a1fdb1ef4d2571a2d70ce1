@@ -1,12 +1,23 @@
-I"�&<p>코테 연습을 이제껏 파이썬으로 했었는데 자바로 연습하려 한다. 최근 수업에 사용한 언어가 파이썬이어서 파이썬을 사용했을 뿐 원래는 자바 실력을 계속 향상시키려 했다. 오랜만에 자바를 써서 구현 속도도 느리고 효율성은 커녕 정확한 코드를 짜기도 버거웠다.</p>
+I")<p><br /></p>
+
+<p>코테 연습을 이제껏 파이썬으로 했는데 자바로 연습하려 한다. <br />
+최근 수업에 사용한 언어가 파이썬이어서 파이썬을 사용했을 뿐 <br />
+원래는 자바 실력을 계속 향상시키려 했다. <br />
+오랜만에 자바를 써서 구현 속도도 느리고 효율성은 커녕 정확한 코드를 짜기도 버거웠다.</p>
+
+<h2 id="brute-force-search">Brute force Search</h2>
 
 <blockquote>
   <p>완전 탐색은 모든 경우의 수를 탐색하는 방법이다.</p>
 </blockquote>
 
-<p>완전 탐색은 효율성이 떨어진다고 볼 수 있지만 답을 찾을 수 있는 확실한 방법이다. DFS와 BFS는 그런 경우(경로)를 탐색하는 방법이다. 항상 헷갈렸던 DFS, BFS로 자바를 연습했다.</p>
+<p>완전 탐색은 효율성이 떨어진다고 볼 수 있지만 답을 찾을 수 있는 확실한 방법이다. <br />
+DFS와 BFS는 그런 경우(경로)를 탐색하는 방법이다. <br />
+항상 헷갈렸던 DFS, BFS로 자바를 연습했다.</p>
 
 <h2 id="dfs-vs-bfs">DFS vs BFS</h2>
+<p><br />
+<img src="/assets/images/bfs-dfs.png" alt="bfs-dfs" /></p>
 
 <table>
   <thead>
@@ -40,7 +51,7 @@
   </tbody>
 </table>
 
-<h2 id="pseudocode">Pseudocode</h2>
+<h3 id="dfs-pseudocode">DFS pseudocode</h3>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// DFS에서 체크인과 체크아웃의 indent는 같아야함
 function dfs() {
@@ -51,8 +62,11 @@ function dfs() {
     5.     간다
     6. 체크아웃
 }
+</code></pre></div></div>
 
-// BFS를 실행하기 전 시작점을 큐에 넣고 큐가 empty일 때까지 BFS 반복
+<h3 id="bfs-pseudocode">BFS pseudocode</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// BFS를 실행하기 전 시작점을 큐에 넣고 큐가 empty일 때까지 BFS 반복
 function bfs() {
     1. 큐에서 꺼내옴
     2. 목적지인가?
@@ -63,8 +77,10 @@ function bfs() {
 }
 </code></pre></div></div>
 
-<h2 id="완전-탐색">완전 탐색</h2>
-<p>완전 탐색은 재귀 함수로 구현된다. 재귀 함수를 구현할 때 중요한 포인트를 몇 개 찝어보았다.</p>
+<h2 id="recursive-function">Recursive Function</h2>
+
+<p>완전 탐색은 재귀 함수로 구현된다. <br />
+재귀 함수를 구현할 때 중요한 포인트를 몇 개 찝어보았다.</p>
 
 <ol>
   <li>하나의 큰 문제를 여러 개의 작은 문제로 나누기</li>
@@ -73,7 +89,7 @@ function bfs() {
   <li>각 작은 문제에서 다음 하위 문제를 <strong>탐색할 조건</strong> 설계하기</li>
 </ol>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function recursion(StateParameters) {
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function rec(StateParameters) {
     if (terminationCondition) {
         return;
     }
@@ -87,12 +103,19 @@ function bfs() {
 
 <h2 id="문제-풀기">문제 풀기</h2>
 
-<p>위 pseudocode를 사용해서 문제를 풀어보자. <br />
-<del>(문제 설명은 생략한다.)</del></p>
+<p>위 pseudocode를 사용해서 문제를 풀어보자.</p>
 
-<p><a href="https://www.acmicpc.net/problem/1062">백준 1062번 가르침 - DFS</a></p>
+<ol>
+  <li><a href="https://www.acmicpc.net/problem/1062">가르침 (백준 1062번)</a></li>
+  <li><a href="https://www.acmicpc.net/problem/3055">탈출 (백준 3055번)</a></li>
+</ol>
 
-<p>모든 단어에 a, c, i, n, t가 들어가므로 K가 5보다 작으면 단어를 하나도 읽을 수 없다. <br />
+<p><del>(문제 설명은 생략한다.)</del></p>
+
+<h3 id="백준-1062번-가르침---dfs"><a href="https://www.acmicpc.net/problem/1062">백준 1062번 가르침 - DFS</a></h3>
+
+<p><br />
+모든 단어에 a, c, i, n, t가 들어가므로 K가 5보다 작으면 단어를 하나도 읽을 수 없다. <br />
 물론 K가 알파벳 수인 26 이상이면 모든 단어를 읽을 수 있다. <br />
 <br />
 위 특수한 경우를 제외하고 이 문제를 완전 탐색으로 어떻게 풀 수 있을까 생각해보자.</p>
@@ -108,10 +131,10 @@ function bfs() {
 <ul>
   <li>모든 경우의 수를 찾을 때 DFS를 사용했다.</li>
   <li>DFS 구현은 재귀함수로 했다.</li>
-  <li>경로에 포함된 알파벳 정보를 boolean array인 visited에 저장했다.</li>
-  <li>DFS의 상태 정보는 visited의 index다.</li>
-  <li>DFS의 종결 조건은 visited에서 true의 개수가 K일 때이다.</li>
-  <li>탐색 조건은 visited가 false일 때이다. <br />
+  <li>경로에 포함된 알파벳 정보를 boolean array에 저장했다.</li>
+  <li>DFS의 상태 정보는 boolean array의 index다.</li>
+  <li>DFS의 종결 조건은 boolean array에서 true의 개수가 K일 때이다.</li>
+  <li>탐색 조건은 boolean array에서 false일 때이다. <br />
 <br /></li>
 </ul>
 
@@ -175,16 +198,21 @@ public static int countWords() {
 
 <p>위 세 함수 중 dfs 함수가 DFS pseudocode에 맞추어 구현된 함수이다. <br />
 DFS 함수를 만들 때 <strong>체크인과 체크아웃을 같은 indent로 맞추면 디버깅이 편하다</strong>. <br />
-그외 특별한 점은 for loop 조건 특성상 알파벳 순서대로 순회하여 이전 알파벳은 이미 탐색된 글자이다. 따라서 <strong>3. 갈 수 있는 곳 순회</strong>에서 0부터가 아닌 curent+1에서 시작해도 무방하다. <br />
+그리고 for loop 조건 특성상 알파벳 순서대로 순회하여 이전 알파벳은 이미 탐색된 글자이다. <br />
+따라서 <strong>3. 갈 수 있는 곳 순회</strong>에서 0부터가 아닌 curent+1에서 시작해도 무방하다. <br />
 <br /></p>
 <hr />
-<p><br />
-<a href="https://www.acmicpc.net/problem/3055">백준 3055번 탈출 - BFS</a> <br />
-<del>이 문제 포기하고 싶었다</del></p>
 
-<p>DFS가 BFS보다 머리 속으로 그리기 쉬워서 DFS를 선호한다. 최단경로 구하는 문제일 경우 BFS로 찾고 break하는 것이 효율성이 좋지만 DFS로 불가능하진 않다. 그러나 DFS를 쓸 수 없는 문제가 간혹 있다. 이 문제가 그렇다.</p>
+<h3 id="백준-3055번-탈출---bfs"><a href="https://www.acmicpc.net/problem/3055">백준 3055번 탈출 - BFS</a></h3>
 
-<p>위 표에 적은 것처럼 고슴도치와 물이 동시에 이동할 때는 DFS를 사용할 수 없다.
+<p><del>이 문제 포기하고 싶었다</del></p>
+
+<p>DFS가 BFS보다 머리 속으로 그리기 쉬워서 DFS를 선호한다.<br />
+최단경로 문제는 BFS로 찾고 break하는 것이 효율성이 좋지만 DFS로 불가능하진 않다. <br />
+그러나 DFS를 쓸 수 없는 문제가 간혹 있다. <br />
+이 문제가 그렇다.</p>
+
+<p>위 표에 적은 것처럼 고슴도치와 물이 동시에 이동할 때는 DFS를 사용할 수 없다. <br />
 BFS pseudocode 연습하려다 까먹고 있었던 class까지 사용한다고 애를 먹었다. <br />
 문제를 풀 때 중요하다 생각된 점을 적어보았다.</p>
 
