@@ -53,7 +53,6 @@ N이 커질수록 차이가 커진다.
 |1|logN|N|NlogN|N^2|2^N|N!|  
 
 <br>
-* * *
 
 ## 공간복잡도(Space Complexity)
 
