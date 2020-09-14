@@ -1,0 +1,20 @@
+I"\<hr />
+
+<p>딥러닝을 기반으로 한 NLP 프로젝트를 진행하게 되었다. <br />
+뉴스 기사에 어울리는 제목을 딥러닝을 사용해서 생성하는 것이 이번 프로젝트의 목표다. <br />
+구글 번역, 네이버 파파고에서 사용하는 machine translation을 사용하여 문제를 해결하기로 했다. <br />
+우선 machein translation이 무엇인지 살펴보자.</p>
+
+<h2 id="machine-translation">Machine Translation</h2>
+
+<blockquote>
+  <p>machine translation은 컴퓨터가 하나의 언어로 된 텍스트(source text)를 다른 언어(target text)로 변환하는 기술을 말한다.</p>
+</blockquote>
+
+<p>Machine translation 기술은 다음과 같이 발전했다.</p>
+
+<p>Rule-based -&gt; Statistical(SMT) -&gt; Neural(NMT)</p>
+
+<h2 id="rule-based-machine-translation">Rule-Based Machine Translation</h2>
+
+:ET

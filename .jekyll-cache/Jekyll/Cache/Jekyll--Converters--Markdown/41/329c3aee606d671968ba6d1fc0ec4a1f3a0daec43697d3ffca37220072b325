@@ -1,0 +1,115 @@
+I"K<hr />
+
+<p>딥러닝을 기반으로 한 NLP 프로젝트를 진행하게 되었다. <br />
+뉴스 기사에 어울리는 제목을 딥러닝을 사용해서 생성하는 것이 이번 프로젝트의 목표다. <br />
+구글 번역, 네이버 파파고에서 사용하는 machine translation을 사용하여 문제를 해결하기로 했다. <br />
+우선 machein translation이 무엇인지 살펴보자.</p>
+
+<h2 id="machine-translation">Machine Translation</h2>
+
+<blockquote>
+  <p>Machine translation은 컴퓨터가 하나의 언어로 된 텍스트(source text)를 다른 언어(target text)로 변환하는 기술을 말한다.</p>
+</blockquote>
+
+<p>Machine translation 기술은 다음과 같이 발전했다.</p>
+
+<ol>
+  <li>Rule-based</li>
+  <li>Statistical(SMT)</li>
+  <li>Neural(NMT)</li>
+</ol>
+
+<h2 id="rule-based-machine-translation">Rule-Based Machine Translation</h2>
+
+<p>영어를 한글로 번역하는 가장 단순한 방법은 영단어를 한글로 바꾸는 것이다. <br />
+영한사전만 있으면 가능한 방법이지만 <em>문법이나 문맥을 전혀 고려하지 않기 때문에</em> 좋은 결과를 얻을 수 없다.</p>
+
+<h2 id="statistical-machine-translationsmt">Statistical Machine Translation(SMT)</h2>
+
+<p>NMT가 등장하기 전까지 machine translation은 SMT 기법을 적용했다. <br />
+SMT를 사용하려면 우선 많은 데이터가 필요하다. <br />
+데이터는 parallel corpus 형태이며 이를 사용하여 가능한 많은 후보군을 만든 다음 정확성을 평가하여 순위를 매긴다. <br />
+즉, 정확성이 가장 높은, 정답에 가까운 확률을 가진 후보를 선택하는 방식이다.</p>
+
+<p>예를 들어, I don’t go home.이라는 문장을 한글로 번역해보자.</p>
+
+<p>나는 집에 가지 않는다.</p>
+
+<p>Rule-based로 번역했다면 나 아니다 가다 집. 수준의 결과가 나올 것이다. <br />
+예시를 한 문장만 들었지만 SMT를 사용할 때는 많은 양의 데이터를 사용한다. <br />
+I를 한글로 번역하면 나, 나는, 내가 등 많은 경우의 수가 존재할 수 있다.</p>
+
+<p>다음과 같은 표가 나올 수 있다.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>I</td>
+      <td>don’t</td>
+      <td>go</td>
+      <td>home</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>나</td>
+      <td>않는다</td>
+      <td>가다</td>
+      <td>집</td>
+    </tr>
+    <tr>
+      <td>나는</td>
+      <td>아니다</td>
+      <td>간다</td>
+      <td>집에</td>
+    </tr>
+    <tr>
+      <td>내가</td>
+      <td>안</td>
+      <td>가지</td>
+      <td>집으로</td>
+    </tr>
+  </tfoot>
+</table>
+
+<p><br /></p>
+
+<p>예시는 단어를 단위로 번역했지만 굳이 단어일 필요는 없다. <br />
+단어가 될 수도 있고 구가 될 수도 있다.  <br />
+여하튼 후보들 중에서 확률값이 가장 높은 것들을 찾아나가며 번역하는 과정을 거친다. <br />
+이 방법도 여러 문제가 있다. <br />
+구 이상의 범위에서 나타나는 언어적 특성을 반영하기 어렵고 번역 단위를 연결할 때 매끄럽지 못할 수 있다.</p>
+
+<h2 id="neural-machine-translationnmt">Neural Machine Translation(NMT)</h2>
+
+<p>딥러닝이 등장하면서 mahcine learning 기술은 급속도로 발전했다. <br />
+NMT는 이러한 구조를 갖고 있다.</p>
+
+<p><img src="https://i.imgur.com/0sxat55.png" alt="NMT" /></p>
+
+<p>그림에서 input layer가 source text, I don’t go home에 해당하고 output layer가 target text, 나는 집에 간다에 해당한다.<br />
+그럼 중간에 hidden layer는 무엇일까?</p>
+
+<p>바로 <strong>문장 벡터</strong>이다.</p>
+
+<p>우리가 색깔을 표현할 때 빨강, 노랑처럼 이름을 말할 수도 있지만 RGB 값을 사용하여 (0,0,0), (255,255,255)같은 벡터로 표현할 수도 있다.</p>
+
+<p>단어도 이처럼 벡터로 표현할 수 있다. <br />
+이를 단어의 분산 표현(Distributed Representation)이라고 한다.</p>
+
+<p>그럼 단어를 어떻게 벡터로 표현할 수 있을까?</p>
+
+<p>여기서 <strong>분포 가설(Distributional Hypothesis)</strong>가 등장한다.</p>
+
+<blockquote>
+  <p>비슷한 문맥을 가진 단어는 비슷한 의미를 갖는다.</p>
+</blockquote>
+
+<p>강아지라는 단어를 생각해보자. 강아지는 어떤 단어와 잘 어울릴까? <br />
+귀엽다, 사랑스럽다가 떠오른다. <br />
+그렇다면 ‘강아지’라는 단어는 귀엽다, 사랑스럽다와 같은 문맥을 갖게 된다.</p>
+
+<p>Distributional hypothesis가 어떤 느낌인지 감이 왔다. <br />
+그렇다면 얘를 어떻게 표현하고 사용하는걸까?</p>
+
+:ET
