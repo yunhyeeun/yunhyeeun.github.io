@@ -6,6 +6,7 @@ tags:
     - deep learning
     - nlp
     - machine translation
+    - study
 ---
 ***
 
