@@ -1,0 +1,32 @@
+I"�<hr />
+
+<h2 id="artificial-evolution">Artificial Evolution</h2>
+
+<p>쉽게 말해 solution을 찾을 때 Darwinian evolution을 차용하는 기법이다. <br />
+시간을 거듭할수록 population이 더 좋은 fitness value를 갖는 방향으로 진화한다고 이해하면 된다.</p>
+
+<h3 id="exploitation-vs-exploration">exploitation vs exploration</h3>
+<p><br />
+궁극적으로는 global optima를 찾는 것이 목표다. <br />
+그러나 그 과정에서 <strong>exploitation</strong>과 <strong>exploration</strong>의 균형을 유지해야 한다. <br />
+Exploitation에 너무 치중하면 convergence에 너무 빨리 도달하여 suboptimal한 결과를 얻을 수 있다.   <br />
+반대로 exploration에 너무 치중하면 길을 잃고 만다.</p>
+
+<ul>
+  <li>too much pressure : premature convergence</li>
+  <li>too little pressure : search goes nowhere</li>
+</ul>
+
+<p>Artificial evolution 순서는 다음과 같다.</p>
+
+<ol>
+  <li>Initial Population</li>
+  <li>Evaluate Fitness of Population</li>
+  <li>Select Fitter Individuals as Parents</li>
+  <li>Create Offsprings from Parents</li>
+  <li>Mutate Offsprings</li>
+  <li>Form Next Generation of Population</li>
+  <li>Loop 2~6 until criterion met</li>
+</ol>
+
+:ET
